@@ -1,0 +1,224 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"description": "API for simple users with mysql",
+		"version": "1.5.0",
+		"title": "User API",
+		"contact": {
+			"email": "info@ethernmyth.cf",
+			"url": "https://ethernmyth.cf"
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		}
+	},
+	"servers": [
+		{
+			"url": "http://localhost:5000/api/users/"
+		}
+	],
+	"tags": [
+		{
+			"name": "User"
+		}
+	],
+	"paths": {
+		"/all": {
+			"get": {
+				"tags": ["User"],
+				"description": "Get all the users",
+				"produces": ["application/json"],
+				"parameters": [],
+				"responses": {
+					"201": {
+						"description": "successful operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/userResponse"
+							}
+						}
+					},
+					"500": {
+						"description": "failed operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/otherResponse"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/{id}": {
+			"get": {
+				"tags": ["User"],
+				"description": "Get single user",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/userResponse"
+							}
+						}
+					},
+					"500": {
+						"description": "failed operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/otherResponse"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/add/{id}": {
+			"post": {
+				"tags": ["User"],
+				"description": "Add new user",
+				"consumes": ["application/json"],
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"default": 0,
+						"type": "string"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"$ref": "#/components/schemas/User"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/userResponse"
+							}
+						}
+					},
+					"500": {
+						"description": "failed operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/otherResponse"
+							}
+						}
+					}
+				}
+			}
+		},
+
+		"/remove/{id}": {
+			"delete": {
+				"tags": ["User"],
+				"description": "Delete a user",
+				"produces": ["application/json"],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "successful operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/otherResponse"
+							}
+						}
+					},
+					"500": {
+						"description": "failed operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/otherResponse"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"userResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer"
+					},
+					"name": {
+						"type": "string"
+					},
+					"surname": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				}
+			},
+			"otherResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				}
+			},
+			"User": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"surname": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}
